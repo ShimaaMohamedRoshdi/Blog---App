@@ -12,7 +12,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-  const {slug} = await params
+  const { slug } = params; // ✅ No need to use `await`
+
   const blog = blogs.find((blog) => blog.slug === slug);
   if (!blog) {
     return;
@@ -173,9 +174,13 @@ export default async function BlogPage({ params }) {
               Table Of Content
             </summary>
             <ul className="mt-4 font-in text-base">
-              {blog.toc.map((item) => (
+              {/* {blog.toc.map((item) => (
                 <TableOfContentsItem key={item.url} item={item} />
-              ))}
+              ))} */}
+              {(blog.toc || []).map((item) => (
+  <TableOfContentsItem key={item.url} item={item} />
+))}
+
             </ul>
           </details>
         </div>
